@@ -1,6 +1,6 @@
 # CondHotel Fanti - Meeting Notes
 
-**Data:** 16/06/2026, 22:43:28
+**Data:** 16/06/2026, 22:55:56
 **Progetto:** Ottimizzazione Google Maps & Digital Strategy
 **Incontro con:** Laura Riva
 
@@ -20,13 +20,13 @@
 
 ## 🌐 Note Generali su Digital Strategy
 
-D1: TEST - Struttura rinominata: Sport Club → CondHotel Fanti ✅
+Note generali
 
 ---
 
 ## 📝 Note Riunione Generale
 
-D1: TEST - Struttura rinominata: Sport Club → CondHotel Fanti ✅
+Note riunione
 
 ---
 
