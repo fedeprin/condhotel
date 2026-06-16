@@ -1126,21 +1126,19 @@ Esportato da: condhotel-maps-optimization.html`;
             const responses = [];
 
             // Legge tutte le textarea con le risposte
-            document.querySelectorAll('[placeholder="Risposta di Laura..."]').forEach((textarea) => {
+            const textareas = document.querySelectorAll('[placeholder="Risposta di Laura..."]');
+            console.log('📋 Textarea trovate:', textareas.length);
+
+            textareas.forEach((textarea, idx) => {
                 // Cerca il genitore più prossimo (il div con il box della domanda)
                 const parentDiv = textarea.parentElement;
+                console.log(`Textarea ${idx}:`, {parentDiv: parentDiv, content: parentDiv?.innerHTML.substring(0, 100)});
+
                 if (parentDiv) {
                     // Cerca il paragrafo con la domanda (dovrebbe essere il primo elemento)
-                    const allElements = parentDiv.querySelectorAll('*');
-                    let questionText = '';
-
-                    // Cerca il primo elemento p che contiene la domanda
-                    for (let elem of allElements) {
-                        if (elem.tagName === 'P' && elem.innerText.includes('D') && elem.innerText.includes(':')) {
-                            questionText = elem.innerText;
-                            break;
-                        }
-                    }
+                    const p = parentDiv.querySelector('p');
+                    const questionText = p?.innerText || '';
+                    console.log(`Q${idx}:`, questionText.substring(0, 50));
 
                     if (questionText) {
                         responses.push({
@@ -1150,6 +1148,8 @@ Esportato da: condhotel-maps-optimization.html`;
                     }
                 }
             });
+
+            console.log('✅ Risposte raccolte:', responses.length);
 
             // Raccoglie le note Digital Strategy
             const digitalStrategyNotes = document.getElementById('digitalStrategyNotes')?.value || '';
