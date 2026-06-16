@@ -975,7 +975,7 @@
             <p>📍 Via Mulino, 7 - 23030 Valdisotto (SO)</p>
             <p>📞 <a href="tel:0342060843">0342 060843</a> • 📧 <a href="mailto:info@condhotelfanti.it">info@condhotelfanti.it</a></p>
             <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Template di strategia - I contenuti verranno aggiornati post-sopralluogo</p>
-            <p style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.7;"><strong>v1.1</strong> | Updated: 2026-06-16 | <a href="https://github.com/fedeprin/condhotel" target="_blank">View on GitHub</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.7;"><strong>v1.2</strong> | Updated: 2026-06-16 | <a href="https://github.com/fedeprin/condhotel" target="_blank">View on GitHub</a></p>
         </div>
     </footer>
 
@@ -1167,32 +1167,36 @@ Esportato da: condhotel-maps-optimization.html`;
             content += `**Incontro con:** Laura Riva\n\n`;
             content += `---\n\n`;
 
-            // Domande e risposte
+            // Domande e risposte - organizzate per numero di domanda
             content += `## 📋 Vademecum Strategico - Domande e Risposte\n\n`;
 
-            const sectionQuestions = {
-                'STORIA RECENSIONI E LEGACY SPORTCLUB': [],
-                'STATO ATTUALE DELLA PRESENCE DIGITALE': [],
-                'PUBBLICO TARGET & ADVERTISING': [],
-                'RISORSE, BUDGET & TIMELINE': []
-            };
+            const sections = [
+                { name: 'STORIA RECENSIONI E LEGACY SPORTCLUB', range: [1, 2, 3] },
+                { name: 'STATO ATTUALE DELLA PRESENCE DIGITALE', range: [4, 5, 6] },
+                { name: 'PUBBLICO TARGET & ADVERTISING', range: [7, 8, 9] },
+                { name: 'RISORSE, BUDGET & TIMELINE', range: [10, 11, 12] }
+            ];
 
-            responses.forEach(resp => {
-                for (const section in sectionQuestions) {
-                    if (resp.question.includes(section.split(' ')[0])) {
-                        sectionQuestions[section].push(resp);
-                        break;
+            sections.forEach(section => {
+                content += `### ${section.name}\n\n`;
+
+                // Filtra le risposte che appartengono a questa sezione
+                const sectionResponses = responses.filter(resp => {
+                    // Estrai il numero della domanda (D1, D2, etc.)
+                    const match = resp.question.match(/D(\d+):/);
+                    if (match) {
+                        const questionNum = parseInt(match[1]);
+                        return section.range.includes(questionNum);
                     }
-                }
-            });
+                    return false;
+                });
 
-            for (const [section, questions] of Object.entries(sectionQuestions)) {
-                content += `### ${section}\n\n`;
-                questions.forEach((q, idx) => {
+                // Se non ci sono risposte, lascia la sezione vuota
+                sectionResponses.forEach((q) => {
                     content += `**${q.question}**\n`;
                     content += `> ${q.answer || '*(nessuna risposta)*'}\n\n`;
                 });
-            }
+            });
 
             content += `---\n\n`;
 
