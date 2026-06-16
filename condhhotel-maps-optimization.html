@@ -927,6 +927,24 @@
         </div>
     </section>
 
+    <!-- GITHUB SETTINGS -->
+    <section style="background: #f0f4f8; padding: 2rem; margin: 2rem 0; border-radius: 4px;">
+        <div class="container">
+            <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">⚙️ Configurazione GitHub</h3>
+            <p style="color: var(--text-light); margin-bottom: 1rem;">Salva il tuo GitHub Personal Access Token qui per poter salvare automaticamente le note su GitHub.</p>
+            <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <label style="display: block; color: var(--primary-color); font-weight: 600; margin-bottom: 0.5rem;">GitHub Token:</label>
+                    <input type="password" id="githubToken" placeholder="ghp_xxxxx..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; font-family: monospace; font-size: 0.9rem;">
+                    <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem;">🔒 Salvato solo nel tuo browser, mai inviato online</p>
+                </div>
+                <button onclick="saveGitHubToken()" style="padding: 0.75rem 1.5rem; background: var(--accent-color); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">💾 Salva Token</button>
+                <button onclick="clearGitHubToken()" style="padding: 0.75rem 1.5rem; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">🗑️ Rimuovi</button>
+            </div>
+            <p id="tokenStatus" style="margin-top: 1rem; color: #27AE60; font-size: 0.9rem; font-weight: 600;"></p>
+        </div>
+    </section>
+
     <!-- MEETING NOTES -->
     <section class="notes-section" id="meeting-notes">
         <div class="notes-container">
@@ -1059,12 +1077,47 @@ Esportato da: condhotel-maps-optimization.html`;
             }
         }
 
+        // Salva il token GitHub nel localStorage
+        function saveGitHubToken() {
+            const token = document.getElementById('githubToken').value.trim();
+            if (!token) {
+                alert('Inserisci un token GitHub valido');
+                return;
+            }
+            localStorage.setItem('github_token', token);
+            document.getElementById('tokenStatus').textContent = '✓ Token salvato con successo!';
+            setTimeout(() => {
+                document.getElementById('tokenStatus').textContent = '';
+            }, 3000);
+        }
+
+        // Carica il token GitHub dal localStorage
+        function loadGitHubToken() {
+            const token = localStorage.getItem('github_token');
+            if (token) {
+                document.getElementById('githubToken').value = token;
+                document.getElementById('tokenStatus').textContent = '✓ Token caricato dal browser';
+            }
+        }
+
+        // Rimuovi il token salvato
+        function clearGitHubToken() {
+            if (confirm('Sei sicuro di voler rimuovere il token GitHub salvato?')) {
+                localStorage.removeItem('github_token');
+                document.getElementById('githubToken').value = '';
+                document.getElementById('tokenStatus').textContent = '✓ Token rimosso';
+                setTimeout(() => {
+                    document.getElementById('tokenStatus').textContent = '';
+                }, 2000);
+            }
+        }
+
         // Salva tutto su GitHub
         async function saveToGitHub() {
-            // Chiedi il token GitHub
-            const token = prompt('Inserisci il tuo GitHub Personal Access Token:\n\n(Vai su https://github.com/settings/tokens per crearne uno con permesso "repo")', '');
+            // Usa il token salvato
+            const token = localStorage.getItem('github_token');
             if (!token) {
-                alert('Token GitHub richiesto!');
+                alert('Token GitHub non configurato!\n\nVai alla sezione "Configurazione GitHub" e salva il tuo token.');
                 return;
             }
 
@@ -1185,6 +1238,7 @@ Esportato da: condhotel-maps-optimization.html`;
         document.addEventListener('DOMContentLoaded', function() {
             loadNotes();
             loadDigitalNotes();
+            loadGitHubToken();
 
             // Auto-save ogni N secondi
             setInterval(autoSaveNotes, AUTO_SAVE_INTERVAL);
