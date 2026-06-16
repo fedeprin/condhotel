@@ -1,0 +1,66 @@
+========================================
+CONDHHOTEL FANTI - QUICK DEPLOY GUIDE
+========================================
+
+COSA FARE:
+1. Salva i file modificati nella cartella
+2. Doppio click su uno dei file .bat
+
+FILE DISPONIBILI:
+________________
+
+📋 push-updates.bat (COMPLETO)
+   - Mostra tutti i step
+   - Verifica ogni passaggio
+   - Usa per i primi test
+   - Aspetta la tua conferma finale
+
+⚡ quick-push.bat (VELOCE)
+   - Fa tutto automaticamente
+   - Chiude dopo 3 secondi
+   - Perfetto per le urgenze
+   - Usalo per gli aggiornamenti rapidi
+
+
+WORKFLOW CONSIGLIATO:
+___________________
+
+1. Modifica il file HTML in locale
+2. Doppio click su quick-push.bat
+3. Aspetta 1-2 minuti
+4. Ricarica la pagina live
+
+LIVE URL:
+https://fedeprin.github.io/condhotel/condhhotel-maps-optimization.html
+
+
+COSA FA OGNI VOLTA:
+_________________
+✓ git add -A          (aggiunge tutto)
+✓ git commit -m "..." (crea il commit)
+✓ git push origin     (pubblica su GitHub)
+✓ GitHub Actions      (pubblica su Pages automaticamente)
+
+
+TROUBLESHOOTING:
+______________
+
+❌ ERRORE: "Non sei nella cartella GitHub corretta"
+   → Sposta i file .bat in C:\Users\feder\Documents\GitHub\condhotel\
+
+❌ ERRORE: "Git non trovato"
+   → Installa Git from https://git-scm.com/
+
+❌ ERRORE: "Permission denied"
+   → Esegui come amministratore (click destro > Esegui come amministratore)
+
+❌ ERRORE: "Nessun cambiamento"
+   → Modifica il file HTML e salva prima di fare il batch
+
+
+NOTES:
+______
+- Il sito live si aggiorna automaticamente dopo il push
+- Aspetta 1-2 minuti per vedere le modifiche
+- I browser potrebbero cachare - Ctrl+Shift+R per refresh completo
+- Le note nel browser restano salvate localmente

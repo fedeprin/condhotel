@@ -305,6 +305,115 @@
             text-decoration: underline;
         }
 
+        /* NOTES SECTION */
+        .notes-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+            padding: 3rem 1.5rem;
+            border-top: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .notes-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .notes-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .notes-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .notes-editor {
+            background: white;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(48, 72, 87, 0.1);
+        }
+
+        #meetingNotes {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.95rem;
+            resize: vertical;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        #meetingNotes:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 8px rgba(232, 119, 34, 0.2);
+        }
+
+        .notes-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .notes-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .notes-btn-save {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .notes-btn-save:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        .notes-btn-clear {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .notes-btn-clear:hover {
+            background: #D66B1E;
+            transform: translateY(-2px);
+        }
+
+        .notes-btn-export {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .notes-btn-export:hover {
+            background: #233847;
+            transform: translateY(-2px);
+        }
+
+        .notes-hint {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 1rem;
+            text-align: center;
+            font-style: italic;
+        }
+
         /* RESPONSIVE */
         @media (max-width: 768px) {
             header .container {
@@ -377,11 +486,22 @@
     <!-- HEADER -->
     <header>
         <div class="container">
-            <div class="logo">CondHotel Fanti</div>
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; margin-right: 0.5rem; vertical-align: middle;">
+                    <!-- Mountain peaks -->
+                    <path d="M8 30 L20 8 L32 30 Z" fill="none" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 30 L20 15 L28 30 Z" fill="none" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M16 30 L20 22 L24 30 Z" fill="none" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+                    <!-- Fanti text -->
+                    <text x="20" y="36" font-family="serif" font-size="8" font-weight="bold" text-anchor="middle" fill="white">FANTI</text>
+                </svg>
+                <span style="vertical-align: middle;">CondHotel Fanti</span>
+            </div>
             <nav>
                 <a href="#pain-points">Pain Points</a>
                 <a href="#azioni">Azioni</a>
                 <a href="#timeline">Timeline</a>
+                <a href="#meeting-notes">Note Riunione</a>
             </nav>
         </div>
     </header>
@@ -650,6 +770,28 @@
         </div>
     </section>
 
+    <!-- MEETING NOTES -->
+    <section class="notes-section" id="meeting-notes">
+        <div class="notes-container">
+            <h2>📝 Note Riunione con Laura Riva</h2>
+            <p class="notes-subtitle">Usa questo spazio per prendere appunti durante l'incontro di domani. Le note verranno salvate automaticamente nel tuo browser.</p>
+
+            <div class="notes-editor">
+                <textarea id="meetingNotes" placeholder="Scrivi qui gli appunti della riunione...&#10;&#10;💡 Tips:&#10;- Decisioni prese&#10;- Azioni da fare&#10;- Risorse disponibili&#10;- Feedback di Laura&#10;- Timeline concordate&#10;&#10;Le note verranno salvate automaticamente ogni 30 secondi."></textarea>
+
+                <div class="notes-actions">
+                    <button class="notes-btn notes-btn-save" onclick="saveNotes()">💾 Salva Note</button>
+                    <button class="notes-btn notes-btn-export" onclick="exportNotes()">📥 Esporta come Testo</button>
+                    <button class="notes-btn notes-btn-clear" onclick="clearNotes()">🗑️ Cancella</button>
+                </div>
+
+                <div class="notes-hint">
+                    ℹ️ Le note vengono salvate automaticamente ogni 30 secondi. Puoi anche usare Ctrl+S (Cmd+S su Mac) per salvare manualmente.
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FOOTER -->
     <footer>
         <div class="container">
@@ -659,5 +801,102 @@
             <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Template di strategia - I contenuti verranno aggiornati post-sopralluogo</p>
         </div>
     </footer>
+
+    <script>
+        // Notes Management
+        const NOTES_STORAGE_KEY = 'condhotel_meeting_notes';
+        const AUTO_SAVE_INTERVAL = 30000; // 30 secondi
+
+        // Carica le note al caricamento della pagina
+        function loadNotes() {
+            const textarea = document.getElementById('meetingNotes');
+            const savedNotes = localStorage.getItem(NOTES_STORAGE_KEY);
+            if (savedNotes) {
+                textarea.value = savedNotes;
+            }
+        }
+
+        // Salva le note nel localStorage
+        function saveNotes() {
+            const textarea = document.getElementById('meetingNotes');
+            const notes = textarea.value;
+            localStorage.setItem(NOTES_STORAGE_KEY, notes);
+
+            // Feedback visivo
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Salvate!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+
+        // Auto-salva ogni N secondi
+        function autoSaveNotes() {
+            const textarea = document.getElementById('meetingNotes');
+            const notes = textarea.value;
+            if (notes.trim()) {
+                localStorage.setItem(NOTES_STORAGE_KEY, notes);
+            }
+        }
+
+        // Esporta note come file di testo
+        function exportNotes() {
+            const textarea = document.getElementById('meetingNotes');
+            const notes = textarea.value;
+            const timestamp = new Date().toLocaleString('it-IT');
+
+            const content = `NOTE RIUNIONE - CondHotel Fanti
+Data: ${timestamp}
+
+${notes}
+
+---
+Esportato da: condhotel-maps-optimization.html`;
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `CondHotel_Note_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        // Cancella le note
+        function clearNotes() {
+            if (confirm('Sei sicuro di voler cancellare tutte le note? Non è possibile annullare questa azione.')) {
+                document.getElementById('meetingNotes').value = '';
+                localStorage.removeItem(NOTES_STORAGE_KEY);
+            }
+        }
+
+        // Salva con Ctrl+S / Cmd+S
+        document.addEventListener('keydown', function(event) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+                event.preventDefault();
+                saveNotes();
+            }
+        });
+
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotes();
+
+            // Auto-save ogni N secondi
+            setInterval(autoSaveNotes, AUTO_SAVE_INTERVAL);
+
+            // Salva quando l'utente esce dalla pagina (se ci sono modifiche non salvate)
+            window.addEventListener('beforeunload', function(e) {
+                const textarea = document.getElementById('meetingNotes');
+                const savedNotes = localStorage.getItem(NOTES_STORAGE_KEY);
+                if (textarea.value && textarea.value !== savedNotes) {
+                    saveNotes();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
