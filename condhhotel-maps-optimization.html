@@ -1126,19 +1126,26 @@ Esportato da: condhotel-maps-optimization.html`;
 
             // Legge tutte le textarea con le risposte
             document.querySelectorAll('[placeholder="Risposta di Laura..."]').forEach((textarea) => {
-                // Cerca la domanda nel div genitore
-                const parentDiv = textarea.closest('div[style*="background: white"]');
+                // Cerca il genitore più prossimo (il div con il box della domanda)
+                const parentDiv = textarea.parentElement;
                 if (parentDiv) {
-                    const questionParagraph = parentDiv.querySelector('p');
-                    if (questionParagraph) {
-                        const question = questionParagraph.innerText;
-                        const answer = textarea.value;
-                        if (question) {
-                            responses.push({
-                                question: question,
-                                answer: answer
-                            });
+                    // Cerca il paragrafo con la domanda (dovrebbe essere il primo elemento)
+                    const allElements = parentDiv.querySelectorAll('*');
+                    let questionText = '';
+
+                    // Cerca il primo elemento p che contiene la domanda
+                    for (let elem of allElements) {
+                        if (elem.tagName === 'P' && elem.innerText.includes('D') && elem.innerText.includes(':')) {
+                            questionText = elem.innerText;
+                            break;
                         }
+                    }
+
+                    if (questionText) {
+                        responses.push({
+                            question: questionText,
+                            answer: textarea.value
+                        });
                     }
                 }
             });
