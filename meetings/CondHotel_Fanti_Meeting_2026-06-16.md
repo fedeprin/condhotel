@@ -1,6 +1,6 @@
 # CondHotel Fanti - Meeting Notes
 
-**Data:** 16/06/2026, 23:02:20
+**Data:** 16/06/2026, 23:09:44
 **Progetto:** Ottimizzazione Google Maps & Digital Strategy
 **Incontro con:** Laura Riva
 
@@ -20,13 +20,13 @@
 
 ## 🌐 Note Generali su Digital Strategy
 
-Note generali
+Note Generali
 
 ---
 
 ## 📝 Note Riunione Generale
 
-Note riunione
+Note riunione aggiornate
 
 ---
 
