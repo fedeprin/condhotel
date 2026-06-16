@@ -1123,16 +1123,24 @@ Esportato da: condhotel-maps-optimization.html`;
 
             // Raccoglie tutte le risposte alle domande
             const responses = [];
-            const sections = ['STORIA RECENSIONI E LEGACY SPORTCLUB', 'STATO ATTUALE DELLA PRESENCE DIGITALE', 'PUBBLICO TARGET & ADVERTISING', 'RISORSE, BUDGET & TIMELINE'];
 
             // Legge tutte le textarea con le risposte
-            document.querySelectorAll('[placeholder="Risposta di Laura..."]').forEach((textarea, index) => {
-                const question = textarea.previousElementSibling.innerText;
-                const answer = textarea.value;
-                responses.push({
-                    question: question,
-                    answer: answer
-                });
+            document.querySelectorAll('[placeholder="Risposta di Laura..."]').forEach((textarea) => {
+                // Cerca la domanda nel div genitore
+                const parentDiv = textarea.closest('div[style*="background: white"]');
+                if (parentDiv) {
+                    const questionParagraph = parentDiv.querySelector('p');
+                    if (questionParagraph) {
+                        const question = questionParagraph.innerText;
+                        const answer = textarea.value;
+                        if (question) {
+                            responses.push({
+                                question: question,
+                                answer: answer
+                            });
+                        }
+                    }
+                }
             });
 
             // Raccoglie le note Digital Strategy
@@ -1201,6 +1209,34 @@ Esportato da: condhotel-maps-optimization.html`;
                 // Converte il contenuto in base64 supportando caratteri Unicode
                 const base64Content = btoa(unescape(encodeURIComponent(content)));
 
+                // Primo, prova a ottenere il file esistente per il SHA
+                let sha = null;
+                try {
+                    const getResponse = await fetch(
+                        `https://api.github.com/repos/fedeprin/condhotel/contents/${filePath}`,
+                        {
+                            headers: {
+                                'Authorization': `token ${token}`,
+                            }
+                        }
+                    );
+                    if (getResponse.ok) {
+                        const fileData = await getResponse.json();
+                        sha = fileData.sha;
+                    }
+                } catch (e) {
+                    // File non esiste ancora, va bene
+                }
+
+                const requestBody = {
+                    message: `📋 Update: Meeting notes - ${new Date().toLocaleDateString('it-IT')}`,
+                    content: base64Content,
+                };
+
+                if (sha) {
+                    requestBody.sha = sha;
+                }
+
                 const response = await fetch(
                     `https://api.github.com/repos/fedeprin/condhotel/contents/${filePath}`,
                     {
@@ -1209,10 +1245,7 @@ Esportato da: condhotel-maps-optimization.html`;
                             'Authorization': `token ${token}`,
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({
-                            message: `📋 Add: Meeting notes - ${new Date().toLocaleDateString('it-IT')}`,
-                            content: base64Content,
-                        })
+                        body: JSON.stringify(requestBody)
                     }
                 );
 
